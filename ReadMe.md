@@ -7,16 +7,16 @@ It also has fail2ban to stop attacks on the server.
 
 useful commands
 ----
-docker ps -a
-docker logs -f swt_1
-docker logs -f swt_2
+* docker ps -a
+* docker logs -f swt_1
+* docker logs -f swt_2
 
 
 one_to_one
 ----
 
-cd one_to_one
-docker-compose up -d
+* cd one_to_one
+* docker-compose up -d
 
 			 _________________               ____________
 			|                 |             |            |
@@ -27,8 +27,8 @@ docker-compose up -d
 load_balancer
 ----
 
-cd load_balancer
-docker build -t swt_server server/. && docker-compose up -d
+* cd load_balancer
+* docker build -t swt_server server/. && docker-compose up -d
 
 
                                        ______________
