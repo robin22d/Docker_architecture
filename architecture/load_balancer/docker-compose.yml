@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  database:
+    build: ./database
+    image: swt_database
+    ports:
+      - 3306
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASS: comsc
+      STARTUP_SQL: /tmp/SWTSchema.sql
+    container_name: swt_db
+
+  server_1:
+    image: swt_server
+    links:
+      - database
+    command: java -jar swt-project-0.0.1-SNAPSHOT.jar --spring.profiles.active=production
+    ports:
+      - 8080
+    container_name: swt_1
+
+  server_2:
+    image: swt_server
+    links:
+      - database
+    command: java -jar swt-project-0.0.1-SNAPSHOT.jar --spring.profiles.active=production --server.port=8082
+    ports:
+      - 8082
+    container_name: swt_2
+
+  nginx:
+    build: ./nginx
+    image: swt_nginx
+    privileged: true
+    links:
+      - server_1
+      - server_2
+    ports:
+      - 8081:8081
+    container_name: swt_nginx
+
